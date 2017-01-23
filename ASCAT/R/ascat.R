@@ -128,7 +128,7 @@ ascat.loadData = function(Tumor_LogR_file, Tumor_BAF_file, Germline_LogR_file = 
 ascat.plotRawData = function(ASCATobj) {
   print.noquote("Plotting tumor data")
   for (i in 1:dim(ASCATobj$Tumor_LogR)[2]) {
-    png(filename = paste(ASCATobj$samples[i],".tumour.png",sep=""), width = 2000, height = 1000, res = 200)
+    bitmap(filename = paste(ASCATobj$samples[i],".tumour.png",sep=""), type="png16m",  width = 900, height = 900, res = 200)
     par(mar = c(0.5,5,5,0.5), mfrow = c(2,1), cex = 0.4, cex.main=3, cex.axis = 2, pch = ifelse(dim(ASCATobj$Tumor_LogR)[1]>100000,".",20))
     plot(c(1,dim(ASCATobj$Tumor_LogR)[1]), c(-1,1), type = "n", xaxt = "n", main = paste(ASCATobj$samples[i], ", tumor data, LogR", sep = ""), xlab = "", ylab = "")
     points(ASCATobj$Tumor_LogR[,i],col="red")
@@ -163,7 +163,7 @@ ascat.plotRawData = function(ASCATobj) {
   if(!is.null(ASCATobj$Germline_LogR)) {
     print.noquote("Plotting germline data")
     for (i in 1:dim(ASCATobj$Germline_LogR)[2]) {
-      png(filename = paste(ASCATobj$samples[i],".germline.png",sep=""), width = 2000, height = 1000, res = 200)
+      bitmap(filename = paste(ASCATobj$samples[i],".germline.png",sep=""), type="png16m", width = 900, height = 900, res = 200)
       par(mar = c(0.5,5,5,0.5), mfrow = c(2,1), cex = 0.4, cex.main=3, cex.axis = 2, pch = ifelse(dim(ASCATobj$Tumor_LogR)[1]>100000,".",20))
       plot(c(1,dim(ASCATobj$Germline_LogR)[1]), c(-1,1), type = "n", xaxt = "n", main = paste(ASCATobj$samples[i], ", germline data, LogR", sep = ""), xlab = "", ylab = "")
       points(ASCATobj$Germline_LogR[,i],col="red")
@@ -567,7 +567,7 @@ ascat.plotSegmentedData = function(ASCATobj) {
     AllIDs = 1:dim(ASCATobj$Tumor_LogR)[1]
     names(AllIDs) = rownames(ASCATobj$Tumor_LogR)
     HetIDs = AllIDs[Select_nonNAs]
-    png(filename = paste(ASCATobj$samples[arraynr],".ASPCF.png",sep=""), width = 2000, height = 1000, res = 200)
+    bitmap(filename = paste(ASCATobj$samples[arraynr],".ASPCF.png",sep=""), type="png16m", width = 900, height = 450, res = 200)
     par(mar = c(0.5,5,5,0.5), mfrow = c(2,1), cex = 0.4, cex.main=3, cex.axis = 2)
     r = ASCATobj$Tumor_LogR_segmented[rownames(ASCATobj$Tumor_BAF_segmented[[arraynr]]),arraynr]
     beta = ASCATobj$Tumor_BAF_segmented[[arraynr]][,]
@@ -1213,7 +1213,7 @@ runASCAT = function(lrr, baf, lrrsegmented, bafsegmented, gender, SNPpos, chromo
   if(nropt>0) {
     #plot Sunrise
     if (!is.na(distancepng)) {
-      png(filename = distancepng, width = 1000, height = 1000, res = 1000/7)
+      bitmap(filename = distancepng, type="png16m", width = 900, height = 900, res = 900/7)
     }
     ascat.plotSunrise(d,psi_opt1,rho_opt1)
     if (!is.na(distancepng)) {
@@ -1270,7 +1270,7 @@ runASCAT = function(lrr, baf, lrrsegmented, bafsegmented, gender, SNPpos, chromo
         pdf(file = nonroundedprofilepng, width = 20, height = y_limit, pointsize=20)
       }
       else{
-        png(filename = nonroundedprofilepng, width = 2000, height = (y_limit*100), res = 200)
+        bitmap(filename = nonroundedprofilepng, type="png16m", width = 900, height = (y_limit*100), res = 200)
       }
     }
     
@@ -1447,7 +1447,7 @@ runASCAT = function(lrr, baf, lrrsegmented, bafsegmented, gender, SNPpos, chromo
         pdf(file = copynumberprofilespng, width = 20, height = y_limit, pointsize=20)
       }
       else{
-        png(filename = copynumberprofilespng, width = 2000, height = (y_limit*100), res = 200)
+        bitmap(filename = copynumberprofilespng, type="png16m", width = 1000, height = (y_limit*100), res = 200)
       }
     }
     #plot ascat profile
@@ -1460,7 +1460,7 @@ runASCAT = function(lrr, baf, lrrsegmented, bafsegmented, gender, SNPpos, chromo
     
     
     if (!is.na(aberrationreliabilitypng)) {
-      png(filename = aberrationreliabilitypng, width = 2000, height = 500, res = 200)
+      bitmap(filename = aberrationreliabilitypng, type="png16m", width = 1000, height = 500, res = 200)
       par(mar = c(0.5,5,5,0.5), cex = 0.4, cex.main=3, cex.axis = 2.5)
       
       diploidprobes = !(SNPposhet[,1]%in%haploidchrs)
@@ -1505,7 +1505,7 @@ runASCAT = function(lrr, baf, lrrsegmented, bafsegmented, gender, SNPpos, chromo
     
     name=gsub(".sunrise.png","",basename(distancepng))
     
-    png(filename = distancepng, width = 1000, height = 1000, res = 1000/7)
+    bitmap(filename = distancepng, type="png16m", width = 900, height = 900, res = 1000/7)
     ascat.plotSunrise(d,0,0)
     dev.off()
     
@@ -2444,7 +2444,7 @@ ascat.predictGermlineGenotypes = function(ASCATobj, platform = "AffySNP6") {
       
     }
     
-    png(filename = paste("tumorSep",colnames(ASCATobj$Tumor_LogR)[i],".png",sep=""), width = 2000, height = 500, res = 200)
+    bitmap(filename = paste("tumorSep",colnames(ASCATobj$Tumor_LogR)[i],".png",sep=""),  type="png16m", width = 900, height = 125, res = 200)
     title = paste(paste(colnames(ASCATobj$Tumor_BAF)[i], Hetero), Homo)
     ascat.plotGenotypes(ASCATobj,title,Tumor_BAF_noNA, Hom, ch_noNA)
     dev.off()
